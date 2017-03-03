@@ -23,4 +23,5 @@
             </td>
         </tr>
     </table>
+    <a href="/pages/new" class="btn btn-default">Добавить страницу</a>
 @endsection

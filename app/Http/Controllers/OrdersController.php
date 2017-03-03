@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\Product;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
@@ -25,18 +26,33 @@ class OrdersController extends Controller
      */
     public function create()
     {
-        //
+        $cart = request()->cookie('cart') ? json_decode(request()->cookie('cart'),true):[];
+        if(empty($cart)) return redirect('/');
+        $products =[];
+        foreach ($cart as $productId => $productAmount){
+            $products[] = Product::find($productId);
+        }
+        return view('orders.cart', compact('products','cart'));
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+        $cart = request()->cookie('cart') ? json_decode(request()->cookie('cart'),true):[];
+        $order = Order::create(request([
+            'customer_name',
+            'email',
+            'phone',
+            'feedback']));
+
+        foreach ($cart as $productId => $productAmount){
+            $order->products()->attach($productId,['amount'=> $productAmount]);
+        }
+        $cookie = \Cookie::forget('cart');
+        return redirect('/')->withCookie($cookie);
     }
 
     /**

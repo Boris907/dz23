@@ -11,4 +11,23 @@ class PagesController extends Controller
         $pages = Page::all();
         return view('pages.index',compact('pages'));
     }
+
+    public function show(Page $page){
+        return view('pages.show',compact('page'));
+    }
+
+    public function create()
+    {
+        return view('pages.create');
+    }
+
+    public function store()
+    {
+        $page = Page::create(request([
+            'title',
+            'alias',
+            'content']));
+
+        return redirect('/pages');
+    }
 }

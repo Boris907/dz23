@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Product;
 use Illuminate\Http\Request;
 
-class ProductsController extends Controller
+class UsersCustomController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +13,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        // //return all products
-        $products = Product::all();
-        return view('products.index',compact('products'));
+        return view('session.create');
     }
 
     /**
@@ -26,7 +23,7 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        return view('registration.create');
     }
 
     /**
@@ -35,15 +32,9 @@ class ProductsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Request $request)
     {
-        $product = Product::create(request([
-            'title',
-            'alias',
-            'price',
-            'description']));
-
-        return redirect('/products');
+        //
     }
 
     /**
@@ -52,9 +43,9 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($id)
     {
-        return view('products.show',compact('product'));
+        //
     }
 
     /**

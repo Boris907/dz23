@@ -5,20 +5,22 @@ namespace App\Providers;
 use App\Page;
 use Illuminate\Support\ServiceProvider;
 
-class AppServiceProvider extends ServiceProvider
+class ViewComposerServiceProvider extends ServiceProvider
 {
     /**
-     * Bootstrap any application services.
+     * Bootstrap the application services.
      *
      * @return void
      */
     public function boot()
     {
-
+        view()->composer('layout_parts.menu',function($view){
+            $view->with('pages', Page::all());
+        });
     }
 
     /**
-     * Register any application services.
+     * Register the application services.
      *
      * @return void
      */

@@ -13,8 +13,24 @@
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li><a href="/products">Товары</a></li>
-                <li><a href="/orders">Заказы</a></li>
+                <li><a href="/products/new">Добавить товар</a></li>
+                <li><a href="/orders">Корзина</a></li>
+                <li><a href="/orders/show">Заказы</a></li>
                 <li><a href="/pages">Pages</a></li>
+                @foreach($pages as $page)
+                    <li><a href="/{{$page->alias}}">{{$page->title}}</a></li>
+                @endforeach
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                @if(Auth::check())
+                    <li>
+                        <a class="" href="">{{Auth::user()->name}}</a>
+                    </li>
+                    <li><a href="/logout">Log out</a></li>
+                @else
+                <li><a href="/login">Login</a></li>
+                <li><a href="/registration">Registration</a></li>
+                @endif
             </ul>
         </div><!--/.nav-collapse -->
     </div>
